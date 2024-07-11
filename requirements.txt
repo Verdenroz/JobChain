@@ -1,0 +1,6 @@
+fastapi
+mangum
+langgraph
+langchain
+langchain-openai
+tavily-python
