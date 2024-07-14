@@ -8,7 +8,7 @@ from schemas.job import JobAgentState
 from src.utils.model import invoke_model
 
 
-class SearchAgent():
+class SearchAgent:
     def __init__(self):
         pass
 

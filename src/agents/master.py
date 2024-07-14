@@ -13,7 +13,8 @@ class MasterAgent:
         self.task_id = int(time.time())
         self.query = query
 
-    def init_graph(self):
+    @staticmethod
+    def init_graph():
         semantics_agent = SemanticsAgent()
         search_agent = SearchAgent()
 

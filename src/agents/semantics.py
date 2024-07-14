@@ -6,11 +6,12 @@ from schemas.job import JobAgentState
 from src.utils.model import invoke_model
 
 
-class SemanticsAgent():
+class SemanticsAgent:
     def __init__(self):
         pass
 
-    async def clarify_query(self, state: JobAgentState):
+    @staticmethod
+    async def clarify_query(state: JobAgentState):
         query = state.query
         prompt = [{
             "role": "system",
@@ -30,7 +31,8 @@ class SemanticsAgent():
 
         return {"query": response_json.get("query")}
 
-    def get_semantics(self, state):
+    @staticmethod
+    def get_semantics(state):
         query = state.query
         prompt = [{
             "role": "system",
