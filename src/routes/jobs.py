@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter, Query, Response, Security
 from fastapi.security import APIKeyHeader
 
@@ -15,8 +13,8 @@ router = APIRouter()
             )
 async def get_jobs(
         response: Response,
-        query: Optional[str] = Query(
-            None,
+        query: str = Query(
+            ...,
             description="Optional query to filter jobs by title or company name"),
 ):
     response.headers["Access-Control-Allow-Origin"] = "*"
@@ -24,5 +22,8 @@ async def get_jobs(
     agent = MasterAgent(query)
 
     result = await agent.run()
+    if result is None or result.get('jobs') is None:
+        return {"message": "No jobs found"}
 
-    return result.get('jobs')
+    print(result)
+    return result['jobs']
