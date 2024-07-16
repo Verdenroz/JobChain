@@ -15,6 +15,11 @@ class ScraperAgent:
         pass
 
     async def scrape_html(self, state: JobAgentState):
+        """
+        Scrape the html content of the urls
+        :param state:
+        :return:
+        """
         urls = state['urls']
         jobs = state.get('jobs') if state.get('jobs') else []
 
@@ -36,6 +41,12 @@ class ScraperAgent:
         return {"jobs": jobs}
 
     async def process_document(self, doc, url):
+        """
+        Process a single document
+        :param doc:
+        :param url:
+        :return:
+        """
         text = doc.page_content[2000:4000]
         prompt = [{
             "role": "system",

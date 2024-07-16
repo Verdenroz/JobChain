@@ -1,4 +1,3 @@
-import time
 from typing import Optional, List
 
 from langgraph.constants import END
@@ -13,13 +12,16 @@ from src.agents.semantics import SemanticsAgent
 
 class MasterAgent:
     def __init__(self, query: str, field: Optional[str] = None, companies: Optional[List[str]] = None):
-        self.task_id = int(time.time())
         self.query = query
         self.field = field
         self.companies = companies
 
     @staticmethod
     def init_graph():
+        """
+        Initialize the state graph with all nodes and edges
+        :return: StateGraph(JobAgentState)
+        """
         semantics_agent = SemanticsAgent()
         search_agent = SearchAgent()
         scraper_agent = ScraperAgent()
@@ -50,6 +52,10 @@ class MasterAgent:
         return builder
 
     async def run(self):
+        """
+        Run the agents in the state graph given the initial state query, field, and companies
+        :return: List[Job]
+        """
         graph = self.init_graph()
         chain = graph.compile()
 

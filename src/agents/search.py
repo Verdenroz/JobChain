@@ -12,11 +12,18 @@ aggregators = [
     'https://www.glassdoor.com/',
     'https://www.dice.com/',
 ]
+
+
 class SearchAgent:
     def __init__(self):
         pass
 
     async def find_job_urls(self, state: JobAgentState):
+        """
+        Find job urls based on a query
+        :param state:
+        :return:
+        """
         query = state['query']
 
         client = TavilyClient(os.environ.get('TAVILY_API_KEY'))
@@ -26,5 +33,3 @@ class SearchAgent:
         urls = [job['url'] for job in jobs_info]
 
         return {"urls": urls}
-
-

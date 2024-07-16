@@ -9,6 +9,11 @@ class SemanticsAgent:
         pass
 
     async def clarify_query(self, state: JobAgentState):
+        """
+        Given a query, the agent will simplify the query and incorporate companies and fields related to the query.
+        :param state:
+        :return:
+        """
         companies = state.get('companies') if state.get('companies') else await self.find_default_companies(state)
         field = state.get('field') if state.get('field') else await self.find_default_field(state)
         initial_query = state['initial_query']
@@ -34,6 +39,12 @@ class SemanticsAgent:
 
     @staticmethod
     def passes_semantics(state):
+        """
+        Given a query, the agent will determine if the query is related to job topics.
+        If the query is related to job topics, then the agent will return True else False.
+        :param state:
+        :return:
+        """
         initial_query = state['initial_query']
         prompt = [{
             "role": "system",
@@ -57,6 +68,11 @@ class SemanticsAgent:
         return result == 'YES'
 
     async def find_default_field(self, state: JobAgentState):
+        """
+        Given a query, the agent will identify the field of study/expertise related to the query.
+        :param state:
+        :return:
+        """
         query = state['initial_query']
         prompt = [{
             "role": "system",
@@ -78,6 +94,11 @@ class SemanticsAgent:
         return field
 
     async def find_default_companies(self, state: JobAgentState):
+        """
+        Given a query, the agent will identify companies related to the query.
+        :param state:
+        :return:
+        """
         query = state['query']
         prompt = [{
             "role": "system",

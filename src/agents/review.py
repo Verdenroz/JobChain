@@ -14,6 +14,11 @@ class ReviewAgent:
         pass
 
     async def revise(self, state):
+        """
+        Checks if jobs should be revised if there are no jobs scraped
+        :param state:
+        :return: True if jobs should be revised
+        """
         jobs = state['jobs']
         if not jobs or len(jobs) == 0:
             return True
@@ -21,21 +26,26 @@ class ReviewAgent:
         return False
 
     async def review(self, state):
+        """
+        Reviews jobs with more than 3 missing fields, updating them with new fields if possible
+        :param state:
+        :return:
+        """
         jobs = state['jobs']
         jobs_to_review = []
 
-        # Step 1: Filter Jobs
+        # Filter Jobs
         for job in jobs:
             fields_to_check = ['job_description', 'job_location', 'job_posted_date', 'job_type', 'job_salary']
             missing_fields = sum(1 for field in fields_to_check if not job.get(field))
             if missing_fields > 3:
                 jobs_to_review.append(job)
 
-        # Step 2: Review in Parallel
+        # Review in Parallel
         review_tasks = [self.review_job(job) for job in jobs_to_review]
         reviewed_jobs = await asyncio.gather(*review_tasks)
 
-        # Step 3: Update Jobs List
+        # Update Jobs List
         for job in reviewed_jobs:
             index = jobs.index(job)
             jobs[index] = job
@@ -43,6 +53,11 @@ class ReviewAgent:
         return {"jobs": jobs}
 
     async def review_job(self, job):
+        """
+        Review a single job
+        :param job:
+        :return:
+        """
         print(f"Reviewing job: {job}")
         url = job['url']
         # Load the urls into Documents
