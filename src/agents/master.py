@@ -11,10 +11,16 @@ from src.agents.semantics import SemanticsAgent
 
 
 class MasterAgent:
-    def __init__(self, query: str, field: Optional[str] = None, companies: Optional[List[str]] = None):
+    def __init__(
+            self, query: str,
+            sources=None,
+            max_results: int = 5
+    ):
+        if sources is None:
+            sources = ['https://www.linkedin.com/']
         self.query = query
-        self.field = field
-        self.companies = companies
+        self.sources = sources
+        self.max_results = max_results
 
     @staticmethod
     def init_graph():
@@ -62,8 +68,9 @@ class MasterAgent:
         result = await chain.ainvoke(
             {
                 'initial_query': self.query,
-                'field': self.field,
-                'companies': self.companies
+                'max_results': self.max_results,
+                'sources': self.sources,
+                'max_revisions': 2,
             }
         )
 

@@ -2,20 +2,12 @@ import os
 
 from tavily import TavilyClient
 
-from src.agents.job_state import JobAgentState
-
-aggregators = [
-    'https://www.indeed.com/',
-    'https://www.monster.com/',
-    'https://www.linkedin.com/',
-    'https://www.ziprecruiter.com/',
-    'https://www.glassdoor.com/',
-    'https://www.dice.com/',
-]
+from src.agents.memory.job_state import JobAgentState
 
 
 class SearchAgent:
-    def __init__(self):
+    def __init__(self, providers: list[str]):
+        self.providers = providers
         pass
 
     async def find_job_urls(self, state: JobAgentState):
@@ -25,11 +17,12 @@ class SearchAgent:
         :return:
         """
         query = state['query']
+        sources = state.get('sources') if state.get('sources') else self.providers
 
         client = TavilyClient(os.environ.get('TAVILY_API_KEY'))
 
-        jobs_info = client.search(query, max_results=3, exclude_domains=aggregators, search_depth='advanced')['results']
+        jobs_info = client.search(query, max_results=2, include_domains=sources)['results']
 
         urls = [job['url'] for job in jobs_info]
-
+        print(urls)
         return {"urls": urls}

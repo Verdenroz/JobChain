@@ -18,17 +18,17 @@ async def get_jobs(
         query: str = Query(
             ...,
             description="Optional query to filter jobs by title or company name"),
-        field: Optional[str] = Query(
+        source: Optional[str] = Query(
             None,
-            description="Optional field of study or expertise related to the query"),
-        companies: Optional[str] = Query(
-            None,
-            description="Optional list of companies related to the query"),
+            description="Optional provider/job aggregator to filter jobs by"),
+        max_results: Optional[int] = Query(
+            5,
+            description="Optional maximum number of jobs to return")
 ):
     response.headers["Access-Control-Allow-Origin"] = "*"
-    companies = companies.split(',') if companies else None
+    sources = source.split(',') if source else None
 
-    agent = MasterAgent(query, field, companies)
+    agent = MasterAgent(query, sources, max_results)
 
     result = await agent.run()
     if result is None or result.get('jobs') is None:
