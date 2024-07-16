@@ -33,7 +33,6 @@ class ScraperAgent:
         # Filter out None results and extend the jobs list
         jobs.extend([job for job in jobs_results if job is not None])
 
-        print(jobs)
         return {"jobs": jobs}
 
     async def process_document(self, doc, url):
@@ -51,11 +50,10 @@ class ScraperAgent:
         lc_messages = convert_openai_messages(prompt)
 
         try:
-            llm = ChatOpenAI(model='gpt-4o', temperature=0).with_structured_output(schema=Job)
+            llm = ChatOpenAI(model='gpt-3.5-turbo', temperature=0).with_structured_output(schema=Job)
             job_dict = await llm.ainvoke(lc_messages)
             job_with_url = dict(job_dict)
             job_with_url['url'] = url
             return job_with_url
-        except OutputParserException as e:
-            print(e)
+        except OutputParserException:
             return None

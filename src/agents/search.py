@@ -18,15 +18,12 @@ class SearchAgent:
 
     async def find_job_urls(self, state: JobAgentState):
         query = state['query']
-        print(query)
 
         client = TavilyClient(os.environ.get('TAVILY_API_KEY'))
 
-        jobs_info = client.search(query, max_results=5, exclude_domains=aggregators)['results']
-        print(jobs_info)
+        jobs_info = client.search(query, max_results=3, exclude_domains=aggregators, search_depth='advanced')['results']
 
         urls = [job['url'] for job in jobs_info]
-        print(urls)
 
         return {"urls": urls}
 

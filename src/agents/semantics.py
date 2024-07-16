@@ -35,7 +35,6 @@ class SemanticsAgent:
     @staticmethod
     def passes_semantics(state):
         initial_query = state['initial_query']
-        print(f"Intial query: {initial_query}")
         prompt = [{
             "role": "system",
             "content": "You are an expert in identifying topics of information based on sentences.\n "
@@ -55,7 +54,6 @@ class SemanticsAgent:
         response_json = json.loads(response)
 
         result = response_json.get("query")
-        print(result == 'YES')
         return result == 'YES'
 
     async def find_default_field(self, state: JobAgentState):
@@ -75,7 +73,6 @@ class SemanticsAgent:
         response_json = json.loads(response)
         field = response_json.get("field")
 
-        print(field)
         if field is None or len(field) == 0:
             field = ""
         return field
@@ -98,7 +95,6 @@ class SemanticsAgent:
         response_json = json.loads(response)
         companies = response_json.get("companies")
 
-        print(f'Companies {companies}')
         if companies is None or len(companies) == 0:
             companies = ""
 
