@@ -95,6 +95,7 @@ class MasterAgent:
             'max_revisions': 2,
         }
         result = []
+        chain.get_graph().print_ascii()
         async for event, chunk in chain.astream(inputs, stream_mode=["updates", "debug"]):
             print(f"Receiving new event of type: {event}...")
             print(chunk)

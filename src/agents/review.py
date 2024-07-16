@@ -80,6 +80,8 @@ class ReviewAgent:
 
         # Update Jobs List
         for job in reviewed_jobs:
+            if job is None:
+                continue
             index = jobs.index(job)
             jobs[index] = job
 

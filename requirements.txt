@@ -7,3 +7,4 @@ langchain-openai
 tavily-python
 html2text
 beautifulsoup4
+grandalf
