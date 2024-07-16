@@ -80,3 +80,25 @@ class MasterAgent:
         )
 
         return result
+
+    async def stream(self):
+        """
+        Stream the agents in the state graph given the initial state query, field, and companies
+        :return: List[Job]
+        """
+        graph = self.init_graph()
+        chain = graph.compile()
+        inputs = {
+            'initial_query': self.query,
+            'max_results': self.max_results,
+            'sources': self.sources,
+            'max_revisions': 2,
+        }
+        result = []
+        async for event, chunk in chain.astream(inputs, stream_mode=["updates", "debug"]):
+            print(f"Receiving new event of type: {event}...")
+            print(chunk)
+            print("\n\n")
+            result = chunk
+
+        return result

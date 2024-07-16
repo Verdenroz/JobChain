@@ -5,4 +5,7 @@ Accept: application/json
 
 ###
 
+GET 127.0.0.1:8000/jobs?query=Find marketing jobs in San Francisco
+Accept: application/json
+
 

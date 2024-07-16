@@ -92,9 +92,9 @@ class ReviewAgent:
         :return:
         """
         print(f"Reviewing job: {job}")
-        url = job.url
+        url = str(job.url)
         # Load the urls into Documents
-        loader = AsyncHtmlLoader(url)
+        loader = AsyncHtmlLoader(web_path=url)
         try:
             doc = loader.load()
         except Exception as e:

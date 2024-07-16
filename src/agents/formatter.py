@@ -9,8 +9,11 @@ class FormatterAgent:
         pass
 
     async def is_valid_url(self, url):
-        response = requests.get(url)
-        return response.status_code == 200
+        try:
+            response = requests.get(url)
+            return response.status_code == 200
+        except Exception:
+            return False
 
     async def format(self, state: JobAgentState):
         job_listings = state['job_listings']
