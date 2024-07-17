@@ -17,6 +17,7 @@ class MasterAgent:
             max_results: int = 5
     ):
         if sources is None:
+            # Tavily seems to have difficulties using multiple sources with include_domains
             sources = ['https://www.linkedin.com/']
         self.query = query
         self.sources = sources

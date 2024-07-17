@@ -9,6 +9,11 @@ class FormatterAgent:
         pass
 
     async def is_valid_url(self, url):
+        """
+        Check if a URL is valid
+        :param url:
+        :return:
+        """
         try:
             response = requests.get(url)
             return response.status_code == 200
@@ -16,6 +21,11 @@ class FormatterAgent:
             return False
 
     async def format(self, state: JobAgentState):
+        """
+        Format the job listings into a List[Job]
+        :param state:
+        :return:
+        """
         job_listings = state['job_listings']
         max_results = state['max_results']
         formatted_jobs = []
@@ -46,5 +56,4 @@ class FormatterAgent:
 
                 formatted_jobs.append(job)
 
-        print(f"Formatted jobs: {formatted_jobs}")
         return {"jobs": formatted_jobs}

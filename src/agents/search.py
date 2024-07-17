@@ -24,5 +24,4 @@ class SearchAgent:
         jobs_info = client.search(query, max_results=2, include_domains=sources)['results']
 
         urls = [job['url'] for job in jobs_info]
-        print(urls)
         return {"urls": urls}

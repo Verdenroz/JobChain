@@ -31,8 +31,9 @@ async def get_jobs(
     agent = MasterAgent(query, sources, max_results)
 
     result = await agent.run()
+
+    # If no jobs are found, return a message
     if result is None or result.get('jobs') is None:
         return {"message": "No jobs found"}
 
-    print(result)
     return result['jobs']

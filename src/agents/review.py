@@ -93,9 +93,7 @@ class ReviewAgent:
         :param job:
         :return:
         """
-        print(f"Reviewing job: {job}")
         url = str(job.url)
-        # Load the urls into Documents
         loader = AsyncHtmlLoader(web_path=url)
         try:
             doc = loader.load()
@@ -103,7 +101,7 @@ class ReviewAgent:
             print(f"Error loading document: {e}")
             return None
 
-        # Try text transformer instead
+        # Try text transformer instead of beautiful soup
         html2text = Html2TextTransformer()
         doc_transformed = html2text.transform_documents(doc)
 
@@ -126,7 +124,6 @@ class ReviewAgent:
             # Update the original job with new fields from job_dict
             job_dict = dict(job_dict)
             job_dict.update(job)
-            print(f"Updated job: {job_dict}")
             return job_dict
         except OutputParserException:
             return job
