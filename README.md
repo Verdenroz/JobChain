@@ -147,7 +147,7 @@ Install dependencies
 Start the server with FastAPI
 
 ```bash
-  python -m uvicorn main:app --reload
+  python -m uvicorn src.main:app --reload
 ```
 
 ## Known Issues
