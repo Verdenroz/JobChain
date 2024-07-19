@@ -1,6 +1,6 @@
 import requests
 
-from schemas.job import Job
+from src.schemas.job import Job
 from src.agents.memory.job_state import JobAgentState
 
 

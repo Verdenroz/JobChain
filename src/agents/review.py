@@ -7,7 +7,7 @@ from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.exceptions import OutputParserException
 from langchain_openai import ChatOpenAI
 
-from schemas.job import Job
+from src.schemas.job import Job
 from src.agents.memory.job_state import JobAgentState
 from src.utils.model import invoke_model
 

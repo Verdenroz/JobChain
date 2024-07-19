@@ -5,7 +5,7 @@ from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_community.document_transformers import BeautifulSoupTransformer
 from langchain_openai import ChatOpenAI
 
-from schemas.joblisting import JobListing
+from src.schemas.joblisting import JobListing
 from src.agents.memory.job_state import JobAgentState
 
 
